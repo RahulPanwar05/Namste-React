@@ -1,21 +1,29 @@
-// <div id="parent">
-// <div id="child">
-//     <h1 heading="h1">heading</h1>
-//     <h2 heading="h1">heading</h2>
-// </div>
-// </div>
+import React from "react";
+import ReactDOM from "react-dom/client";
+import Header from "./Header";
 
-const parent = React.createElement("div", { id: "parent" }, [
-  React.createElement("div", { id: "child1" }, [
-    React.createElement("h1", { id: "heading1" }, "this is h1"),
-    React.createElement("h2", { id: "heading2" }, "this is h2"),
-  ]),
-  React.createElement("div", { id: "child2" }, [
-    React.createElement("h1", { id: "heading3" }, "this is h1"),
-    React.createElement("h2", { id: "heading4" }, "this is h2"),
-  ]),
-]);
+let jsxHeading = <h1 id="heading">This is a jsx heading </h1>;
 
-console.log(parent);
+// jsx is html like syntax its not htm
+// jsx is not a valid javascript that why we need babel to transpile jsx to react element
+
+// react functional component
+
+const TitleComponent = () => {
+  return <h1>just a title component</h1>;
+};
+
+// component composition
+const HeadingComponent = () => {
+  return (
+    <div>
+      <TitleComponent />
+      {Math.floor(Math.random() * 10)}
+      <h1>just a react heading component</h1>
+    </div>
+  );
+};
+
 const root = ReactDOM.createRoot(document.getElementById("root"));
-root.render(parent);
+
+root.render(<Header />);

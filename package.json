@@ -1,0 +1,33 @@
+{
+  "name": "namste-react",
+  "version": "1.0.0",
+  "description": "This is namste react by rahul panwar",
+  "main": "App.js",
+  "scripts": {
+    "test": "jest",
+    "start": "npx parcel index.html",
+    "build": "px parcel build index.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RahulPanwar05/Namste-React.git"
+  },
+  "author": "Rahul Panwar",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/RahulPanwar05/Namste-React/issues"
+  },
+  "homepage": "https://github.com/RahulPanwar05/Namste-React#readme",
+  "devDependencies": {
+    "parcel": "^2.12.0",
+    "process": "^0.11.10"
+  },
+  "dependencies": {
+    "lucide-react": "^0.438.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "browserslist": [
+    "last 2 version"
+  ]
+}

@@ -1,0 +1,25 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+.main{
+    display: flex;
+    width: 100vw;
+    background-color: rgb(132, 236, 236);
+    justify-content: space-around;
+    align-items: center;
+    height: 100px;
+    gap: 100px;
+    padding: 30px;
+    box-sizing: border-box;
+}
+.search{
+    flex-grow: 1;
+    height: 100%;
+}
+input{
+    flex-grow: 1;
+    padding: 8px;
+    width: 100%;
+    box-sizing: border-box;
+}
