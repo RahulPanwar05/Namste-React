@@ -6,6 +6,7 @@ const Body = () => {
   const [resList, setRestList] = useState(restaurantList);
   const [filteredRes, setFilteredRes] = useState([]);
   const [searchText, setSearchText] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleSearch = () => {
     const filteredList = resList.filter((res) =>
@@ -18,25 +19,33 @@ const Body = () => {
   }, []);
 
   const fetchData = async () => {
-    
-    const res = await fetch(
-      "https://thingproxy.freeboard.io/fetch/https://www.swiggy.com/dapi/restaurants/list/v5?lat=30.2694012&lng=78.0564035&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
-    );
-    const result = await res.json();
-    console.log(
-      result?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle
-        ?.restaurants,
-      "res"
-    );
-    setFilteredRes(
-      result?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle
-        ?.restaurants
-    );
-    setRestList(
-      result?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle
-        ?.restaurants
-    );
+    try {
+      setLoading(true);
+      const res = await fetch(
+        "https://thingproxy.freeboard.io/fetch/https://www.swiggy.com/dapi/restaurants/list/v5?lat=30.2694012&lng=78.0564035&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
+      );
+      const result = await res.json();
+      setFilteredRes(
+        result?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle
+          ?.restaurants
+      );
+      setRestList(
+        result?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle
+          ?.restaurants
+      );
+      setLoading(false);
+    } catch (error) {
+      console.log(error, "error in fetchin data");
+    }
   };
+
+  if (loading) {
+    return (
+      <div className="flex" style={{height:'50vh'}}>
+        <p>loading....</p>
+      </div>
+    );
+  }
 
   return (
     <div className="body-container">
