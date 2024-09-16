@@ -1,9 +1,10 @@
 import RestaurantCard from "./RestaurantCard";
-import restaurantList from "../utils/mockData";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
+import { allCardUrl } from "../utils/Constant";
+import useOnlineStatus from "../utils/useOnlineStatus";
 
 const Body = () => {
-  const [resList, setRestList] = useState(restaurantList);
+  const [resList, setRestList] = useState([]);
   const [filteredRes, setFilteredRes] = useState([]);
   const [searchText, setSearchText] = useState("");
   const [loading, setLoading] = useState(false);
@@ -14,6 +15,7 @@ const Body = () => {
     );
     setFilteredRes(filteredList);
   };
+
   useEffect(() => {
     fetchData();
   }, []);
@@ -21,10 +23,9 @@ const Body = () => {
   const fetchData = async () => {
     try {
       setLoading(true);
-      const res = await fetch(
-        "https://thingproxy.freeboard.io/fetch/https://www.swiggy.com/dapi/restaurants/list/v5?lat=30.2694012&lng=78.0564035&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
-      );
+      const res = await fetch(allCardUrl);
       const result = await res.json();
+      console.log(result, "result");
       setFilteredRes(
         result?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle
           ?.restaurants
@@ -39,27 +40,39 @@ const Body = () => {
     }
   };
 
+  const onlineStatus = useOnlineStatus();
+
+  if (!onlineStatus) {
+    return (
+      <h1 style={{ textAlign: "center" }}>
+        You are offline please check your internet connection
+      </h1>
+    );
+  }
+
   if (loading) {
     return (
-      <div className="flex" style={{height:'50vh'}}>
+      <div className="flex" style={{ height: "50vh" }}>
         <p>loading....</p>
       </div>
     );
   }
 
   return (
-    <div className="body-container">
-      <div className="search">
+    <div className="container">
+      <div className="flex m-3  gap-4 justify-center items-center">
         <input
           type="text"
           value={searchText}
           onChange={(e) => {
             setSearchText(e.target.value);
           }}
+          className="border border-solid border-black p-2 rounded-lg"
+          placeholder="search here"
         />
 
-        <button onClick={handleSearch}>search</button>
-        <button
+        <button onClick={handleSearch} className="bg-green-300 p-2 rounded-lg">search</button>
+        <button className="bg-green-300 p-2 rounded-lg"
           onClick={() => {
             const topRatedRes = filteredRes.filter(
               (res) => res.info.avgRating >= 4.3
@@ -70,7 +83,7 @@ const Body = () => {
           Top rated restaurant
         </button>
       </div>
-      <div className="card-container">
+      <div className="flex gap-2">
         {filteredRes.map((restaurant) => (
           <RestaurantCard key={restaurant.info.id} resData={restaurant.info} />
         ))}
