@@ -10,7 +10,7 @@ const RestaurantCard = ({ resData }) => {
 
   return (
     <div
-      className=""
+      className="border border-solid border-slate-400 rounded-lg max-w-64 p-3 cursor-pointer hover:border-2 hover:border-green-500"
       onClick={() => {
         navigate(`/restaurants/${id}`);
       }}

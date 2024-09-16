@@ -83,7 +83,7 @@ const Body = () => {
           Top rated restaurant
         </button>
       </div>
-      <div className="flex gap-2">
+      <div className="flex gap-2 flex-wrap justify-center">
         {filteredRes.map((restaurant) => (
           <RestaurantCard key={restaurant.info.id} resData={restaurant.info} />
         ))}
